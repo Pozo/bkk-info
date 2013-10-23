@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/remove_selections"
+        android:icon="@drawable/tag_remove"
+        android:title="@string/reset_all_selection"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/gear"
+        android:title="@string/settings"/>
+
+</menu>

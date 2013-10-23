@@ -1,0 +1,94 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:id="@+id/toggle_buttons"
+	        android:layout_height="50dp"
+	        android:layout_width="fill_parent"
+	        android:layout_weight="1"
+	        android:padding="5dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp"
+	        android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/active_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <!-- active -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple" >
+
+                <TextView
+                    android:gravity="left"
+                    android:padding="5dip"
+                    android:text="@string/changes_today"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+        <!-- /active -->
+
+        <!-- soon -->
+
+        <TableLayout
+            android:id="@+id/soon_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple" >
+
+                <TextView
+                    android:gravity="left"
+                    android:padding="5dip"
+                    android:text="@string/changes_near_future"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+        <!-- /soon -->
+
+
+        <!-- future -->
+
+        <TableLayout
+            android:id="@+id/future_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple" >
+
+                <TextView
+                    android:gravity="left"
+                    android:padding="5dip"
+                    android:text="@string/changes_future"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <!-- /future -->
+
+        </TableLayout>
+    </LinearLayout>
+
+</ScrollView>

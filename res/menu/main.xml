@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/arrow_circle_left"
+        android:title="@string/refresh"/>
+    <item
+        android:id="@+id/alarms"
+        android:icon="@drawable/clock"
+        android:title="@string/alarms"/>
+
+</menu>

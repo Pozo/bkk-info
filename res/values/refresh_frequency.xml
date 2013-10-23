@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:android="http://schemas.android.com/apk/res/android">
+    <string-array name="syncFrequency">
+        <item name="10">@string/notification_settings_refresh_frequency_10</item>
+        <item name="10">@string/notification_settings_refresh_frequency_20</item>
+        <item name="30">@string/notification_settings_refresh_frequency_30</item>
+        <item name="60">@string/notification_settings_refresh_frequency_60</item>
+        <item name="0">@string/notification_settings_refresh_frequency_off</item>
+    </string-array>
+    <string-array name="syncFrequencyValues">
+        <item name="10">600</item>
+        <item name="20">1200</item>
+        <item name="30">1800</item>
+        <item name="60">3600</item>
+        <item name="0">0</item>
+    </string-array>
+     
+</resources>
