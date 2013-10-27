@@ -20,7 +20,7 @@
     <string name="notification_settings_sound_title">Az értesítések hangjelzéssel történjenek</string>
     <string name="notification_settings_sound_description">Értesítés hanggal</string>
     <string name="notification_settings_refresh_frequiency_title">Automatikus frissítés gyakorisága</string>
-    <string name="notification_settings_refresh_frequiency_description">A új forgalmirend változások ellenőrzésének gyakorisága</string>
+    <string name="notification_settings_refresh_frequiency_description">A új forgalmi rend változások ellenőrzésének gyakorisága</string>
     <string name="notification_settings_refresh_frequency_10">10 percenként</string>
     <string name="notification_settings_refresh_frequency_20">20 percenként</string>
     <string name="notification_settings_refresh_frequency_30">30 percenként</string>
