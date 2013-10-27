@@ -1,6 +1,7 @@
 package com.github.pozo.bkkinfo.tasks;
 
 import com.github.pozo.bkkinfo.NotificationSettingsActivity;
+import com.github.pozo.bkkinfo.R;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -17,7 +18,7 @@ public class TruncateDatabaseTask extends AsyncTask<Void, Void, Void> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		this.progressDialog.setMessage("Betöltés...");
+		this.progressDialog.setMessage(notificationSettingsActivity.getResources().getString(R.string.loading));
 		this.progressDialog.show();			
 	}
 	@Override
@@ -32,5 +33,7 @@ public class TruncateDatabaseTask extends AsyncTask<Void, Void, Void> {
 		if (progressDialog != null && progressDialog.isShowing()) {
 			progressDialog.dismiss();
 		}
+		notificationSettingsActivity.finish();
+		notificationSettingsActivity.startActivity(notificationSettingsActivity.getIntent());
 	}
 }
