@@ -5,24 +5,24 @@ import org.json.JSONException;
 import com.github.pozo.bkkinfo.ModelReceiver;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Model;
-import com.github.pozo.bkkinfo.services.NotificationService;
 import com.github.pozo.bkkinfo.shared.Constants;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class NotificationTask extends AsyncTask<Void, Void, Model> {
-	private final NotificationService notificationService;
+	private final Context context;
 	private boolean refresh = false;
 	
 	private ArrayList<String> requiredLines = new ArrayList<String>();
 	private ArrayList<String> notifications = new ArrayList<String>();
 	
 
-	public NotificationTask(NotificationService notificationService) {
-		this.notificationService = notificationService;
+	public NotificationTask(Context context) {
+		this.context = context;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class NotificationTask extends AsyncTask<Void, Void, Model> {
 		Model model = null;
 		try {
 			model = Model.getModel(refresh);
-			DbConnector databaseConnection = DbConnector.getInstance(notificationService);
+			DbConnector databaseConnection = DbConnector.getInstance(context);
 			requiredLines = databaseConnection.getRequiredLines();
 			notifications = databaseConnection.getNotifications();
 		} catch (JSONException e) {
@@ -47,6 +47,6 @@ public class NotificationTask extends AsyncTask<Void, Void, Model> {
 		intent.putExtra(ModelReceiver.REQUIRED_LINES, requiredLines);
 		intent.putExtra(ModelReceiver.NOTIFICATIONS, notifications);
 
-		LocalBroadcastManager.getInstance(notificationService).sendBroadcast(intent);
+		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }

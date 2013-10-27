@@ -17,7 +17,6 @@ import android.widget.TableLayout;
 
 public class MainActivity extends Activity {
 	private ModelReceiver modelReceiver = new ModelReceiver();
-	
 	private ToggleButtons toggleButtons;
 	
 	private TableLayout activeTable;
