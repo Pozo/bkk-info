@@ -1,10 +1,8 @@
 package com.github.pozo.bkkinfo.services;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.tasks.NotificationTask;
 
 import android.app.Service;
 import android.content.Intent;
@@ -29,13 +27,7 @@ public class NotificationService extends Service {
 		
 		if(refreshFrequencyNumber != 0) {
 			Log.i(Constants.LOG_TAG, (refreshFrequencyNumber * 1000)+".");
-			timer.scheduleAtFixedRate(new TimerTask() {
-				
-				@Override
-				public void run() {
-					new NotificationTask(NotificationService.this).execute();
-				}
-			}, 0, refreshFrequencyNumber * 1000);
+			timer.scheduleAtFixedRate(new NotificationTimerTask(this), 0, refreshFrequencyNumber * 1000);
 		}
 	}
 	private int getRefreshFrequency() {
