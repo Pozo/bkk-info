@@ -2,23 +2,21 @@ package com.github.pozo.bkkinfo.tasks;
 
 import java.util.ArrayList;
 import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.github.pozo.bkkinfo.ModelReceiver;
 import com.github.pozo.bkkinfo.db.DbConnector;
-import com.github.pozo.bkkinfo.model.Entry;
-import com.github.pozo.bkkinfo.model.Line;
 import com.github.pozo.bkkinfo.model.Model;
-import com.github.pozo.bkkinfo.model.Model.ModelParser;
 import com.github.pozo.bkkinfo.services.NotificationService;
+import com.github.pozo.bkkinfo.shared.Constants;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class NotificationTask extends AsyncTask<Void, Void, Model> {
 	private final NotificationService notificationService;
 	private boolean refresh = false;
 	
-	private static Model model = null;
 	private ArrayList<String> requiredLines = new ArrayList<String>();
 	private ArrayList<String> notifications = new ArrayList<String>();
 	
@@ -29,36 +27,26 @@ public class NotificationTask extends AsyncTask<Void, Void, Model> {
 
 	@Override
 	protected Model doInBackground(Void... params) {
+		Model model = null;
 		try {
-			if(isNotCached()) {
-				String json = RetriveJSON.getJSON();
-				JSONObject jObject = new JSONObject(json);
-				model = ModelParser.parse(jObject);
-			}
+			model = Model.getModel(refresh);
 			DbConnector databaseConnection = DbConnector.getInstance(notificationService);
 			requiredLines = databaseConnection.getRequiredLines();
 			notifications = databaseConnection.getNotifications();
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.e(Constants.LOG_TAG, e.getMessage());
 		}
 		return model;
 	}
-	private boolean isNotCached() {
-		return model == null || refresh;
-	}
 	@Override
 	protected void onPostExecute(Model result) {
-		Log.i("tag", "NotificationTask:onPostExecute");
-		for (Entry entry : model.getAllEntry()) {
-			
-			for (Line line : entry.getLines()) {
-				for (String lineName : line.getLines()) {
-					if(requiredLines.contains(lineName) && !notifications.contains(entry.getId())) {
-						notificationService.createNotification(entry, lineName, line.getType());
-						DbConnector.getInstance(notificationService).addNotification(entry.getId());
-					}
-				}
-			}
-		}
+		Log.i(Constants.LOG_TAG, "NotificationTask:onPostExecute");
+		
+		Intent intent = new Intent(ModelReceiver.BROADCAST_ACTION);
+
+		intent.putExtra(ModelReceiver.REQUIRED_LINES, requiredLines);
+		intent.putExtra(ModelReceiver.NOTIFICATIONS, notifications);
+
+		LocalBroadcastManager.getInstance(notificationService).sendBroadcast(intent);
 	}
 }

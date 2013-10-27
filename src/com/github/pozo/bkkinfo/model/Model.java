@@ -1,14 +1,28 @@
 package com.github.pozo.bkkinfo.model;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.github.pozo.bkkinfo.MainActivity;
 import com.github.pozo.bkkinfo.model.Entry.EntryParser;
+import com.github.pozo.bkkinfo.shared.Constants;
 
 public class Model {
+	private static Model model = null;
+	
 	public enum Type {
 		ACTIVE,SOON,FUTURE;
 	};
@@ -16,6 +30,17 @@ public class Model {
 	private ArrayList<Entry> soonList = new ArrayList<Entry>();
 	private ArrayList<Entry> futureList = new ArrayList<Entry>();
 	
+	public static boolean isCached() {
+		return model != null;
+	}
+	public static synchronized Model getModel(boolean refresh) throws JSONException {
+		if(model == null || refresh) {
+			String json = getJSON();
+			JSONObject jObject = new JSONObject(json);
+			model = ModelParser.parse(jObject);
+		}
+		return model;
+	}
 	public ArrayList<Entry> getAllEntry() {
 		ArrayList<Entry> allEntry = new ArrayList<Entry>();
 		
@@ -135,5 +160,40 @@ public class Model {
 				+ (futureList != null ? "futureList: " + futureList : "")
 				+ "\n}";
 	}
-	
+	private static String getJSON() {
+		DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+		HttpPost httppost = new HttpPost("http://www.bkk.hu/apps/bkkinfo/lista-api.php");
+		// Depends on your web service
+		httppost.setHeader("Content-type", "application/json");
+
+		InputStream inputStream = null;
+		String result = "{\"active\":[],\"soon\":[],\"future\":[]}";
+		
+		try {
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
+
+			inputStream = entity.getContent();
+			// json is UTF-8 by default
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+			StringBuilder stringBuilder = new StringBuilder();
+
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				stringBuilder.append(line + "\n");
+			}
+			result = stringBuilder.toString();
+		} catch (Exception e) {
+			Log.e(Constants.LOG_TAG, e.getMessage());
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}					
+			} catch (Exception squish) {
+				Log.e(Constants.LOG_TAG, squish.getMessage());
+			}
+		}
+		return result;
+	}
 }

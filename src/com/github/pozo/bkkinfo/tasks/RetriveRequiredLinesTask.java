@@ -3,6 +3,7 @@ package com.github.pozo.bkkinfo.tasks;
 import java.util.ArrayList;
 
 import com.github.pozo.bkkinfo.NotificationSettingsActivity;
+import com.github.pozo.bkkinfo.R;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -22,7 +23,7 @@ public class RetriveRequiredLinesTask extends AsyncTask<Void, Void, ArrayList<St
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		this.progressDialog.setMessage("Betöltés...");
+		this.progressDialog.setMessage(notificationSettingsActivity.getResources().getString(R.string.loading));
 		this.progressDialog.show();			
 	}
 	@Override
