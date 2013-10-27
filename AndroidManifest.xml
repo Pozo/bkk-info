@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.github.pozo.bkkinfo.BKKInfoPreferenceActivity"
+            android:name="com.github.pozo.bkkinfo.BasicPreferenceActivity"
             android:label="@string/title_activity_notification_settings"
             android:screenOrientation="portrait" >
         </activity>

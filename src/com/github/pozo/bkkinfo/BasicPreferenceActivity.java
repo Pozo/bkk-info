@@ -3,7 +3,7 @@ package com.github.pozo.bkkinfo;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
-public class BKKInfoPreferenceActivity extends PreferenceActivity {
+public class BasicPreferenceActivity extends PreferenceActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
