@@ -104,7 +104,7 @@ public class TableEntryRow {
 					
 					@Override
 					public void onClick(View v) {
-						Intent webViewIntent = WebViewIntent.buildIntent(context, entry);
+						Intent webViewIntent = WebViewIntent.buildIntent(context, entry.getId());
 						context.startActivity(webViewIntent);
 					}
 				});
