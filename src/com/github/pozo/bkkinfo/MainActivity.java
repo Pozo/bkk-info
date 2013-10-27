@@ -7,6 +7,8 @@ import com.github.pozo.bkkinfo.tasks.RetriveModelTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.widget.TableLayout;
 
 public class MainActivity extends Activity {
+	private ModelReceiver modelReceiver = new ModelReceiver();
+	
 	private ToggleButtons toggleButtons;
 	
 	private TableLayout activeTable;
@@ -31,14 +35,12 @@ public class MainActivity extends Activity {
         soonTable = (TableLayout) findViewById(R.id.soon_table);
         futureTable = (TableLayout) findViewById(R.id.future_table);
         
+        IntentFilter intentFilter = new IntentFilter(ModelReceiver.BROADCAST_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(modelReceiver, intentFilter);
+
         startService(new Intent(this, NotificationService.class));
         new RetriveModelTask(this).execute();
     }
-	@Override
-	protected void onDestroy() {
-		stopService(new Intent(this, NotificationService.class));
-		super.onDestroy();
-	}
 	public void addEntryToActiveTable(Entry entry) {
 		new TableEntryRow(this, entry).add(activeTable);
     }
