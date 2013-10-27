@@ -84,7 +84,7 @@ public class DbConnector {
 		
 		return false;
 	}
-	public ArrayList<String> getRequiredLines() {
+	public synchronized ArrayList<String> getRequiredLines() {
 		ArrayList<String> lines = new ArrayList<String>();
 		final Cursor cursor = database.query(
 				DatabaseHelper.TABLE_NAME_REQUIRED_LINES, 
@@ -99,7 +99,7 @@ public class DbConnector {
 		cursor.close();
 		return lines;
 	}
-	public boolean isRequiredLine(String lineName) {
+	public synchronized boolean isRequiredLine(String lineName) {
 		boolean retval = false;
 		final String constraint = LINE_NAME + " = \"" + lineName+"\"";
 
@@ -112,38 +112,38 @@ public class DbConnector {
 		cursor.close();		
 		return retval;
 	}
-	public long addRequiredLine(String lineName) {
+	public synchronized long addRequiredLine(String lineName) {
 		final ContentValues values = new ContentValues();
 
 		values.put(LINE_NAME, lineName);
 		
 		return database.insert(DatabaseHelper.TABLE_NAME_REQUIRED_LINES, null, values);
 	}
-	public int removeRequiredLine(String lineName) {
+	public synchronized int removeRequiredLine(String lineName) {
 		final String constraint = LINE_NAME + " = \"" + lineName+"\"";
 
 		return database.delete(
 				DatabaseHelper.TABLE_NAME_REQUIRED_LINES,
 				constraint, null);
 	}
-	public long addNotification(String entryId) {
+	public synchronized long addNotification(String entryId) {
 		final ContentValues values = new ContentValues();
 
 		values.put(ENTRY_ID, entryId);
 		
 		return database.insert(DatabaseHelper.TABLE_NAME_NOTIFICATIONS, null, values);
 	}
-	public int deleteAllNotifications() {
+	public synchronized int deleteAllNotifications() {
 		return database.delete(
 				DatabaseHelper.TABLE_NAME_NOTIFICATIONS,
 				null, null);
 	}
-	public int deleteAllRequiredLines() {
+	public synchronized int deleteAllRequiredLines() {
 		return database.delete(
 				DatabaseHelper.TABLE_NAME_REQUIRED_LINES,
 				null, null);		
 	}
-	public ArrayList<String> getNotifications() {
+	public synchronized ArrayList<String> getNotifications() {
 		ArrayList<String> lines = new ArrayList<String>();
 		final Cursor cursor = database.query(
 				DatabaseHelper.TABLE_NAME_NOTIFICATIONS, 
