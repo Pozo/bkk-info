@@ -4,13 +4,13 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.WebViewIntent;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,30 +19,6 @@ import android.webkit.WebViewClient;
 @SuppressLint("SetJavaScriptEnabled")
 public class WebActivity extends Activity {
 	private String lineId;
-	
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		Log.i("tag", "onNewIntent" + intent.toString());
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.i("tag", "onResume");
-	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		Log.i("tag", "onStart");
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("tag", "onActivityResult" + data.toString());
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +27,7 @@ public class WebActivity extends Activity {
 
 		lineId = WebViewIntent.getLineId(getIntent());
 
-		final ProgressDialog pd = ProgressDialog.show(this, "", "Loading...", true);
+		final ProgressDialog pd = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
 
 		final WebView webView = (WebView) findViewById(R.id.webView1);
 		WebSettings webSettings = webView.getSettings();
@@ -59,12 +35,12 @@ public class WebActivity extends Activity {
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				if (pd.isShowing() && pd != null) {
+				if (pd != null && pd.isShowing()) {
 					pd.dismiss();
 				}
 			}
 		});
-		Log.i("tag", "onCreate, lineID: " + lineId);
+		Log.i(Constants.LOG_TAG, "url : " + "http://m.bkkinfo.hu/alert.php?id=" + lineId);
 		setWebViewContent("http://m.bkkinfo.hu/alert.php?id=" + lineId, webView);
 	}
 
@@ -80,8 +56,7 @@ public class WebActivity extends Activity {
 			webView.loadDataWithBaseURL("http://m.bkkinfo.hu/", doc.html(), "text/html", "utf-8","http://m.bkkinfo.hu/");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(Constants.LOG_TAG, e.getMessage());
 		}
 	}
 }
