@@ -1,4 +1,6 @@
 bkk-info
 ========
 
-BKK Info Androidra
+BKK Info fanmade Androidra
+
+http://pozo.github.io/bkk-info/
