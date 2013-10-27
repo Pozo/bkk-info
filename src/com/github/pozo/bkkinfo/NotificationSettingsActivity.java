@@ -156,14 +156,12 @@ public class NotificationSettingsActivity extends Activity {
 	    switch (item.getItemId()) {
 	        case R.id.remove_selections:
 	        	new TruncateDatabaseTask(this).execute();
-	        	finish();
-	        	startActivity(getIntent());
 	        	return true;
 	        case R.id.settings:
 	        	
 	    		String packageName = getPackageName();
 	    		
-	    		Intent notificationSettingsActivity = new Intent(this, BKKInfoPreferenceActivity.class);
+	    		Intent notificationSettingsActivity = new Intent(this, BasicPreferenceActivity.class);
 	    		notificationSettingsActivity.setPackage(packageName);
 	    		notificationSettingsActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	    		
