@@ -8,6 +8,7 @@
     <string name="changes_today">Mai forgalmi változások</string>
     <string name="changes_near_future">A közeljövő tervezett változásai</string>
     <string name="changes_future">Tervezett változások</string>
+    <string name="loading">Betöltés...</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_notification_settings">NotificationSettingsActivity</string>
     <string name="action_settings">Settings</string>
