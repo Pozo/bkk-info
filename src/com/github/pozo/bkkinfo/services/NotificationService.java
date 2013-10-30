@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class NotificationService extends Service {
 	private static final String PREF_SYNC_FREQUENCY = "prefSyncFrequency";
+	public static final String ACTION_CHECK_NOTIFICATIONS = "com.github.pozo.bkkinfo.CHECK_NOTIFICATIONS";
 	
     private Timer timer;
     
@@ -26,8 +27,9 @@ public class NotificationService extends Service {
 		int refreshFrequencyNumber = getRefreshFrequency();
 		
 		if(refreshFrequencyNumber != 0) {
-			Log.i(Constants.LOG_TAG, (refreshFrequencyNumber * 1000)+".");
-			timer.scheduleAtFixedRate(new NotificationTimerTask(this), 0, refreshFrequencyNumber * 1000);
+			int refreshTimeInMilis = refreshFrequencyNumber * 10;
+			Log.i(Constants.LOG_TAG, String.format("NotificationTimerTask refresh rate is : %d", refreshTimeInMilis));
+			timer.scheduleAtFixedRate(new NotificationTimerTask(this), refreshTimeInMilis, refreshTimeInMilis);
 		}
 	}
 	private int getRefreshFrequency() {
@@ -36,9 +38,10 @@ public class NotificationService extends Service {
 		int refreshFrequencyNumber = Integer.parseInt(refreshFrequency);
 		return refreshFrequencyNumber;
 	}
-
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.i(Constants.LOG_TAG, "NotificationService:onStartCommand");
+		timer.schedule(new NotificationTimerTask(this), 0);
 		return START_STICKY;		
 	}
 	

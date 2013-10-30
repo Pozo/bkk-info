@@ -1,6 +1,7 @@
 package com.github.pozo.bkkinfo.shared;
 
-import com.github.pozo.bkkinfo.WebActivity;
+import com.github.pozo.bkkinfo.activities.WebActivity;
+
 import android.content.Context;
 import android.content.Intent;
 

@@ -17,7 +17,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/line_secound"
+        android:id="@+id/line_second"
         android:layout_width="58dip"
         android:layout_height="36dip"
         android:layout_margin="2dip"

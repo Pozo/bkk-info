@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,25 +18,42 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.github.pozo.bkkinfo.MainActivity;
 import com.github.pozo.bkkinfo.model.Entry.EntryParser;
 import com.github.pozo.bkkinfo.shared.Constants;
 
 public class Model {
+	private static final String API_URL = "http://www.bkk.hu/apps/bkkinfo/lista-api.php";
+	private static final String EMPTY_RESULT = "{\"active\":[],\"soon\":[],\"future\":[]}";
+	
 	private static Model model = null;
 	
 	public enum Type {
 		ACTIVE,SOON,FUTURE;
 	};
-	private ArrayList<Entry> active = new ArrayList<Entry>();
-	private ArrayList<Entry> soonList = new ArrayList<Entry>();
-	private ArrayList<Entry> futureList = new ArrayList<Entry>();
 	
-	public static boolean isCached() {
+	private HashMap<Type, ArrayList<Entry>> entries = initializeEntries();
+
+	private static HashMap<Type, ArrayList<Entry>> initializeEntries() {
+		HashMap<Type, ArrayList<Entry>> entries = new HashMap<Type, ArrayList<Entry>>();
+		
+		entries.put(Type.ACTIVE, new ArrayList<Entry>());
+		entries.put(Type.SOON, new ArrayList<Entry>());
+		entries.put(Type.FUTURE, new ArrayList<Entry>());
+		
+		return entries;
+	}
+	
+	public static boolean isExists() {
 		return model != null;
 	}
+	public static boolean isEmpty() {
+		if(isExists()) {
+			return model.getAllEntry().isEmpty();
+		}
+		return true;
+	}
 	public static synchronized Model getModel(boolean refresh) throws JSONException {
-		if(model == null || refresh) {
+		if(!isExists() || isEmpty() || refresh) {
 			String json = getJSON();
 			JSONObject jObject = new JSONObject(json);
 			model = ModelParser.parse(jObject);
@@ -43,10 +62,10 @@ public class Model {
 	}
 	public ArrayList<Entry> getAllEntry() {
 		ArrayList<Entry> allEntry = new ArrayList<Entry>();
-		
-		allEntry.addAll(active);
-		allEntry.addAll(soonList);
-		allEntry.addAll(futureList);
+
+		allEntry.addAll(entries.get(Type.ACTIVE));
+		allEntry.addAll(entries.get(Type.SOON));
+		allEntry.addAll(entries.get(Type.FUTURE));
 		
 		return allEntry;
 	}
@@ -55,119 +74,49 @@ public class Model {
 		public static Model parse(JSONObject jsonObject) throws JSONException {
 			Model retval = new Model();
 			
-			parseActiveList(jsonObject, retval);
-			parseSoonList(jsonObject, retval);			
-			parseFutureList(jsonObject, retval);
-			
+			for (Type type : Type.values()) {
+				parseList(type, jsonObject, retval);
+			}
 			return retval;
 		}
 
-		private static void parseActiveList(JSONObject jsonObject, Model retval)
-				throws JSONException {
-			JSONArray activeObjects = jsonObject.getJSONArray(Type.ACTIVE.name().toLowerCase());
+		private static void parseList(Type type, JSONObject jsonObject, Model retval) throws JSONException  {
+			JSONArray objects = jsonObject.getJSONArray(type.name().toLowerCase(Locale.ENGLISH));
 
-			for (int i = 0; i < activeObjects.length(); i++) {
-				JSONObject oneObject = activeObjects.getJSONObject(i);
-				retval.addActiveEntry(EntryParser.parse(oneObject));
-			}
-		}
-
-		private static void parseSoonList(JSONObject jsonObject, Model retval)
-				throws JSONException {
-			JSONArray soonObjects = jsonObject.getJSONArray(Type.SOON.name().toLowerCase());
-
-			for (int i = 0; i < soonObjects.length(); i++) {
-				JSONObject oneObject = soonObjects.getJSONObject(i);
-				retval.addSoonEntry(EntryParser.parse(oneObject));
-			}
-		}
-
-		private static void parseFutureList(JSONObject jsonObject, Model retval)
-				throws JSONException {
-			JSONArray futureObjects = jsonObject.getJSONArray(Type.FUTURE.name().toLowerCase());
-
-			for (int i = 0; i < futureObjects.length(); i++) {
-				JSONObject oneObject = futureObjects.getJSONObject(i);
-				retval.addFutureEntry(EntryParser.parse(oneObject));
+			for (int i = 0; i < objects.length(); i++) {
+				JSONObject oneObject = objects.getJSONObject(i);
+				retval.addEntry(type, EntryParser.parse(oneObject));
 			}
 		}
 	}
 
-	public ArrayList<Entry> getFilteredActiveList(MainActivity mainActivity) {
-		
-		if(mainActivity.getToggleButtons().isFilteredLinesEmpty()) {
-			return active;
+	public ArrayList<Entry> getFilteredList(Type type, ArrayList<String> filteredLines) {
+		if(filteredLines.isEmpty()) {
+			return entries.get(type);
 		} else {
 			ArrayList<Entry> filteredEntries = new ArrayList<Entry>();
 			
-			for (Entry entry : active) {
-				if(entry.hasAtLeastOneLineType(mainActivity.getToggleButtons().getFilteredLines())) {
+			for (Entry entry : entries.get(type)) {
+				if(entry.hasAtLeastOneLineType(filteredLines)) {
 					filteredEntries.add(entry);
 				}
 			}
 			return filteredEntries;			
-		}
-
+		}		
 	}
 
-	public void addActiveEntry(Entry active) {
-		this.active.add(active);
+	public void addEntry(Type type, Entry newEntry) {
+		entries.get(type).add(newEntry);
 	}
 
-	public ArrayList<Entry> getFilteredSoonList(MainActivity mainActivity) {
-		if(mainActivity.getToggleButtons().isFilteredLinesEmpty()) {
-			return soonList;
-		} else {
-			ArrayList<Entry> filteredEntries = new ArrayList<Entry>();
-			
-			for (Entry entry : soonList) {
-				if(entry.hasAtLeastOneLineType(mainActivity.getToggleButtons().getFilteredLines())) {
-					filteredEntries.add(entry);
-				}
-			}
-			return filteredEntries;			
-		}
-	}
-
-	public void addSoonEntry(Entry soon) {
-		this.soonList.add(soon);
-	}
-
-	public ArrayList<Entry> getFilteredFutureList(MainActivity mainActivity) {
-		if(mainActivity.getToggleButtons().isFilteredLinesEmpty()) {
-			return futureList;
-		} else {
-			ArrayList<Entry> filteredEntries = new ArrayList<Entry>();
-			
-			for (Entry entry : futureList) {
-				if(entry.hasAtLeastOneLineType(mainActivity.getToggleButtons().getFilteredLines())) {
-					filteredEntries.add(entry);
-				}
-			}
-			return filteredEntries;			
-		}
-	}
-
-	public void addFutureEntry(Entry future) {
-		this.futureList.add(future);
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getName() + " {\n\t"
-				+ (active != null ? "active: " + active + "\n\t" : "")
-				+ (soonList != null ? "soonList: " + soonList + "\n\t" : "")
-				+ (futureList != null ? "futureList: " + futureList : "")
-				+ "\n}";
-	}
 	private static String getJSON() {
 		DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-		HttpPost httppost = new HttpPost("http://www.bkk.hu/apps/bkkinfo/lista-api.php");
+		HttpPost httppost = new HttpPost(API_URL);
 		// Depends on your web service
 		httppost.setHeader("Content-type", "application/json");
 
 		InputStream inputStream = null;
-		String result = "{\"active\":[],\"soon\":[],\"future\":[]}";
+		String result = EMPTY_RESULT;
 		
 		try {
 			HttpResponse response = httpclient.execute(httppost);
@@ -195,5 +144,9 @@ public class Model {
 			}
 		}
 		return result;
+	}
+	@Override
+	public String toString() {
+		return "Model [" + (entries != null ? "entries=" + entries : "") + "]";
 	}
 }

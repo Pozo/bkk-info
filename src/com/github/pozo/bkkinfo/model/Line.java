@@ -38,7 +38,12 @@ public class Line {
 		Type(int flagValue) {
 			this.flagValue = flagValue;
 		}
-
+		public boolean isShowable() {
+			if(this.equals(LIBEGO) || this.equals(SIKLO)) {
+				return false;
+			}
+			return true;
+		}
 		public int getFlagValue() {
 			return flagValue;
 		}

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import com.github.pozo.bkkinfo.activities.MainActivity;
 import com.github.pozo.bkkinfo.model.Line;
 import com.github.pozo.bkkinfo.model.Line.Type;
 import com.github.pozo.bkkinfo.tasks.RetriveModelTask;
@@ -30,7 +31,7 @@ public class ToggleButtons {
 		LinearLayout tableRow = (LinearLayout) mainActivity.findViewById(R.id.toggle_buttons);
 		
 		for (Type type : Type.values()) {
-			if(!type.equals(Type.LIBEGO) && !type.equals(Type.SIKLO)) {
+			if(type.isShowable()) {
 				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				ToggleButton tb = (ToggleButton) inflater.inflate(R.layout.toggle_button, null);
 				tb.setTag(type.name());
@@ -55,55 +56,36 @@ public class ToggleButtons {
 	}
 	private int getResourceId(Object object, int state) {
 		if(object.equals(Type.VILLAMOS.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6158;				
-			} else {
-				return R.drawable.image6157;
-			}	
+			return getResourceIdByState(state,R.drawable.image6158,R.drawable.image6157);
+
 		} else if(object.equals(Type.BUSZ.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6162;				
-			} else {
-				return R.drawable.image6161;
-			}
+			return getResourceIdByState(state,R.drawable.image6162,R.drawable.image6161);
+
 		} else if(object.equals(Type.HEV.name())) {
+			return getResourceIdByState(state,R.drawable.image6154,R.drawable.image6153);
 			
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6154;				
-			} else {
-				return R.drawable.image6153;
-			}
 		} else if(object.equals(Type.METRO.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6119;				
-			} else {
-				return R.drawable.image6118;
-			}
+			return getResourceIdByState(state,R.drawable.image6119,R.drawable.image6118);
+
 		} else if(object.equals(Type.TROLIBUSZ.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6159;				
-			} else {
-				return R.drawable.image6160;
-			}
+			return getResourceIdByState(state,R.drawable.image6159,R.drawable.image6160);
+			
 		} else if(object.equals(Type.HAJO.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6155;				
-			} else {
-				return R.drawable.image6156;
-			}
+			return getResourceIdByState(state,R.drawable.image6155,R.drawable.image6156);
+
 		} else if(object.equals(Type.EJSZAKAI.name())) {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6120;				
-			} else {
-				return R.drawable.image6121;
-			}
+			return getResourceIdByState(state,R.drawable.image6120,R.drawable.image6121);
+			
 		} else {
-			if(state == android.R.attr.state_checked) {
-				return R.drawable.image6158;				
-			} else {
-				return R.drawable.image6157;
-			}	
+			return getResourceIdByState(state,R.drawable.image6158,R.drawable.image6157);
 		}
+	}
+	private int getResourceIdByState(int state, int resourceIfChecked, int resourceIfUNChecked) {
+		if(state == android.R.attr.state_checked) {
+			return resourceIfChecked;				
+		} else {
+			return resourceIfUNChecked;
+		}	
 	}
 	public void changeFilterState(View view) {
 		ToggleButton toggleButton = (ToggleButton) view;
@@ -155,7 +137,7 @@ public class ToggleButtons {
 				currentFilterState -= Line.Type.EJSZAKAI.getFlagValue();
 			}
 		} 
-		new RetriveModelTask(mainActivity).execute();
+		new RetriveModelTask(mainActivity, false).execute();
 	}
 	public boolean hasFlag(Line.Type lineType) {
 		return (currentFilterState & lineType.getFlagValue()) != 0x0;
