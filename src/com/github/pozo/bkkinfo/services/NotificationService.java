@@ -27,7 +27,7 @@ public class NotificationService extends Service {
 		int refreshFrequencyNumber = getRefreshFrequency();
 		
 		if(refreshFrequencyNumber != 0) {
-			int refreshTimeInMilis = refreshFrequencyNumber * 10;
+			int refreshTimeInMilis = refreshFrequencyNumber * 1000;
 			Log.i(Constants.LOG_TAG, String.format("NotificationTimerTask refresh rate is : %d", refreshTimeInMilis));
 			timer.scheduleAtFixedRate(new NotificationTimerTask(this), refreshTimeInMilis, refreshTimeInMilis);
 		}
