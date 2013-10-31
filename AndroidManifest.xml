@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name="com.github.pozo.bkkinfo.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -26,7 +26,7 @@
         </activity>
 
         <receiver
-            android:name="com.github.pozo.bkkinfo.receivers.NotificationReceiver"
+            android:name=".receivers.NotificationReceiver"
             android:enabled="true"
             android:exported="false"
             android:label="NotificationReceiver" >
@@ -35,7 +35,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.github.pozo.bkkinfo.receivers.NetworkStateReceiver"
+            android:name=".receivers.NetworkStateReceiver"
             android:enabled="true"
             android:exported="false"
             android:label="NetworkStateReceiver" >
@@ -46,7 +46,7 @@
         </receiver>
 
         <activity
-            android:name="com.github.pozo.bkkinfo.activities.WebActivity"
+            android:name=".activities.WebActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -55,17 +55,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.github.pozo.bkkinfo.activities.BasicPreferenceActivity"
+            android:name=".activities.BasicPreferenceActivity"
             android:label="@string/title_activity_notification_settings"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.github.pozo.bkkinfo.activities.NotificationSettingsActivity"
+        <activity android:name=".activities.NotificationSettingsActivity"
             android:label="@string/title_activity_notification_settings"
             android:screenOrientation="portrait" >
         </activity>
 
         <service
-            android:name="com.github.pozo.bkkinfo.services.NotificationService"
+            android:name=".services.NotificationService"
             android:enabled="true"
             android:exported="false"
             android:icon="@drawable/ic_launcher"
