@@ -7,9 +7,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -20,8 +22,8 @@ public class TableEntryRow {
 	private static final String EMPTY_TABLE_TEXT = "Nincs a szűrésnek megfelelő tervezett forgalmi változás.";
 	private static final String ENTRY_DETAILS = "Tovább...";
 
-	Entry entry;
-	final Context context;
+	private Entry entry;
+	private final Context context;
 
 	public TableEntryRow(Context context, Entry entry) {
 		this(context);
@@ -63,7 +65,7 @@ public class TableEntryRow {
 		TextView textViewToTime = (TextView) entryTableRow.findViewById(R.id.to_time);
 		textViewToTime.setText(entry.getVegeSzoveg());
 		
-		entryTableRow.setOnClickListener(new TableRowClickListener(this, entryTableRow, activeTable));
+		entryTableRow.setOnClickListener(new TableRowClickListener(context, this, entryTableRow, activeTable));
 		
 		activeTable.addView(entryTableRow, new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		
@@ -137,11 +139,19 @@ public class TableEntryRow {
 	private void correctTextSize(String lineName, TextView textView) {
 		if(lineName.length()>=4) {
 			textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
-			textView.setHeight(30);
+			textView.setHeight((int)dipToPixels(context, 23f));
 		}
 		if(lineName.length()>=6) {
 			textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f);
-			textView.setHeight(30);
+			textView.setHeight((int)dipToPixels(context, 23f));
 		}
+		
+	}
+	public static float dipToPixels(Context context, float dipValue) {
+	    DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+	    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+	}
+	public Entry getEntry() {
+		return entry;
 	}
 }
