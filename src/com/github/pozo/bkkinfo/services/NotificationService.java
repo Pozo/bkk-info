@@ -21,14 +21,13 @@ public class NotificationService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		Log.i(Constants.LOG_TAG, "NotificationService:onCreate");
 		
 		timer = new Timer();
 		int refreshFrequencyNumber = getRefreshFrequency();
 		
 		if(refreshFrequencyNumber != 0) {
 			int refreshTimeInMilis = refreshFrequencyNumber * 1000;
-			Log.i(Constants.LOG_TAG, String.format("NotificationTimerTask refresh rate is : %d", refreshTimeInMilis));
+
 			timer.scheduleAtFixedRate(new NotificationTimerTask(this), refreshTimeInMilis, refreshTimeInMilis);
 		}
 	}
@@ -40,7 +39,7 @@ public class NotificationService extends Service {
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.i(Constants.LOG_TAG, "NotificationService:onStartCommand");
+
 		timer.schedule(new NotificationTimerTask(this), 0);
 		return START_STICKY;		
 	}
@@ -51,7 +50,7 @@ public class NotificationService extends Service {
 			timer.cancel();
 			timer.purge();			
 		}
-		Log.i(Constants.LOG_TAG, "NotificationService:onDestroy");
+
 		super.onDestroy();
 	}
 	@Override

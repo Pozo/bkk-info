@@ -42,7 +42,7 @@ public class WebActivity extends Activity {
 				}
 			}
 		});
-		Log.i(Constants.LOG_TAG, "url : " + "http://m.bkkinfo.hu/alert.php?id=" + lineId);
+
 		setWebViewContent("http://m.bkkinfo.hu/alert.php?id=" + lineId, webView);
 	}
 
@@ -58,7 +58,7 @@ public class WebActivity extends Activity {
 			webView.loadDataWithBaseURL("http://m.bkkinfo.hu/", doc.html(), "text/html", "utf-8","http://m.bkkinfo.hu/");
 			
 		} catch (Exception e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
+
 			NetworkConnectionUnavailableDialog.create(WebActivity.this, true).show();
 		}
 	}

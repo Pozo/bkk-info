@@ -132,14 +132,14 @@ public class Model {
 			}
 			result = stringBuilder.toString();
 		} catch (Exception e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
+			
 		} finally {
 			try {
 				if (inputStream != null) {
 					inputStream.close();
 				}					
 			} catch (Exception squish) {
-				Log.e(Constants.LOG_TAG, squish.getMessage());
+				
 			}
 		}
 		return result;

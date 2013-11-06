@@ -41,7 +41,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i(Constants.LOG_TAG, "MainActivity:onResume");
 		new RetriveModelTask(this, false).execute();
 	}
 	private void addEntryToTable(Type type, Entry entry) {

@@ -58,7 +58,7 @@ public class RetriveModelTask extends AsyncTask<Void, Void, Model> {
 	        //mainActivity.sendBroadcast(intent2);
 	        //localBroadcastManager.sendBroadcast(intent);
 		} catch (JSONException e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
+
 		}
 		return model;
 	}

@@ -20,7 +20,6 @@ public class BasicPreferenceActivity extends PreferenceActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.i(Constants.LOG_TAG, "BasicPreferenceActivity:onPause");
 		if(NetworkConnectionHelper.isNetworkConnected(this)) {
 			stopService(new Intent(this, NotificationService.class));
 			startService(new Intent(this, NotificationService.class));			
