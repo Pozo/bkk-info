@@ -52,10 +52,9 @@ public class Model {
 		}
 		return true;
 	}
-	public static synchronized Model getModel(boolean refresh) throws JSONException {
+	public static synchronized Model getModel(String receivedJSON, boolean refresh) throws JSONException {
 		if(!isExists() || isEmpty() || refresh) {
-			String json = getJSON();
-			JSONObject jObject = new JSONObject(json);
+			JSONObject jObject = new JSONObject(receivedJSON);
 			model = ModelParser.parse(jObject);
 		}
 		return model;
@@ -109,7 +108,7 @@ public class Model {
 		entries.get(type).add(newEntry);
 	}
 
-	private static String getJSON() {
+	public static String getJSON() {
 		DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
 		HttpPost httppost = new HttpPost(API_URL);
 		// Depends on your web service

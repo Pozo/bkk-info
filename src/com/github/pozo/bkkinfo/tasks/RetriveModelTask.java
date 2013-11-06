@@ -45,7 +45,7 @@ public class RetriveModelTask extends AsyncTask<Void, Void, Model> {
 	@Override
 	protected Model doInBackground(Void... params) {
 		try {
-			model = Model.getModel(refresh);
+			model = Model.getModel(Model.getJSON(),refresh);
 			
 			//LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mainActivity);
 	        Intent intent = new Intent();

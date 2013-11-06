@@ -25,6 +25,7 @@ import android.util.Log;
 public class NotificationReceiver extends BroadcastReceiver {
 	public static final String NOTIFICATIONS = "notifications";
 	public static final String REQUIRED_LINES = "requiredLines";
+	public static final String JSON_TEXT = "jsonText";
 	
 	public static final String ACTION_NOTIFICATION = "com.github.pozo.bkkinfo.NOTIFICATION";
 	
@@ -33,10 +34,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		try {
 			Log.i(Constants.LOG_TAG, "NotificationReceiver:onReceive");
-			Model model = Model.getModel(false);
-		
+	
 			ArrayList<String> requiredLines = intent.getStringArrayListExtra(REQUIRED_LINES);
 			ArrayList<String> notifications = intent.getStringArrayListExtra(NOTIFICATIONS);
+			String jsonText = intent.getStringExtra(JSON_TEXT);
+
+			Model model = Model.getModel(jsonText, false);
 			
 			for (Entry entry : model.getAllEntry()) {
 

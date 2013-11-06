@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.github.pozo.bkkinfo.db.DbConnector;
+import com.github.pozo.bkkinfo.model.Model;
 import com.github.pozo.bkkinfo.receivers.NotificationReceiver;
 import com.github.pozo.bkkinfo.shared.Constants;
 
@@ -22,6 +23,7 @@ final class NotificationTimerTask extends TimerTask {
 	public void run() {
 		Log.i(Constants.LOG_TAG, "NotificationTimerTask:run");
 		DbConnector databaseConnection = DbConnector.getInstance(context);
+		String jsonText = Model.getJSON();
 		
 		ArrayList<String> requiredLines = databaseConnection.getRequiredLines();
 		ArrayList<String> notifications = databaseConnection.getNotifications();
@@ -30,6 +32,8 @@ final class NotificationTimerTask extends TimerTask {
 
 		intent.putExtra(NotificationReceiver.REQUIRED_LINES, requiredLines);
 		intent.putExtra(NotificationReceiver.NOTIFICATIONS, notifications);
+		intent.putExtra(NotificationReceiver.JSON_TEXT, jsonText);
+		
 		context.sendBroadcast(intent);
 		//LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
