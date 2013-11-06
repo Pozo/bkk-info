@@ -16,10 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.github.pozo.bkkinfo.model.Entry.EntryParser;
-import com.github.pozo.bkkinfo.shared.Constants;
 
 public class Model {
 	private static final String API_URL = "http://www.bkk.hu/apps/bkkinfo/lista-api.php";

@@ -5,12 +5,9 @@ import java.util.TimerTask;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
 import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Model;
 import com.github.pozo.bkkinfo.receivers.NotificationReceiver;
-import com.github.pozo.bkkinfo.shared.Constants;
 
 final class NotificationTimerTask extends TimerTask {
 	private final Context context;
@@ -21,7 +18,7 @@ final class NotificationTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		Log.i(Constants.LOG_TAG, "NotificationTimerTask:run");
+
 		DbConnector databaseConnection = DbConnector.getInstance(context);
 		String jsonText = Model.getJSON();
 		

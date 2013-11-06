@@ -9,14 +9,12 @@ import com.github.pozo.bkkinfo.model.Model;
 import com.github.pozo.bkkinfo.model.Model.Type;
 import com.github.pozo.bkkinfo.receivers.NetworkStateReceiver;
 import com.github.pozo.bkkinfo.services.NotificationService;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.NetworkConnectionHelper;
 import com.github.pozo.bkkinfo.shared.NetworkConnectionUnavailableDialog;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class RetriveModelTask extends AsyncTask<Void, Void, Model> {
 	private final ProgressDialog progressDialog;

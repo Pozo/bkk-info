@@ -8,13 +8,11 @@ import com.github.pozo.bkkinfo.TableEntryRow;
 import com.github.pozo.bkkinfo.ToggleButtons;
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Model.Type;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.tasks.RetriveModelTask;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

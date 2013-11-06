@@ -2,13 +2,11 @@ package com.github.pozo.bkkinfo.activities;
 
 import com.github.pozo.bkkinfo.R;
 import com.github.pozo.bkkinfo.services.NotificationService;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.NetworkConnectionHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 
 public class BasicPreferenceActivity extends PreferenceActivity {
 	@Override

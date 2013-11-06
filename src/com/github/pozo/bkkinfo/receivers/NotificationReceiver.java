@@ -8,7 +8,6 @@ import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Line;
 import com.github.pozo.bkkinfo.model.Model;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.LineResourceHelper;
 import com.github.pozo.bkkinfo.shared.WebViewIntent;
 
@@ -20,7 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class NotificationReceiver extends BroadcastReceiver {
 	public static final String NOTIFICATIONS = "notifications";
@@ -33,7 +31,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		try {
-			Log.i(Constants.LOG_TAG, "NotificationReceiver:onReceive");
 	
 			ArrayList<String> requiredLines = intent.getStringArrayListExtra(REQUIRED_LINES);
 			ArrayList<String> notifications = intent.getStringArrayListExtra(NOTIFICATIONS);
@@ -55,7 +52,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 			}
 			
 		} catch (JSONException e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
+
 		}
 	}
 

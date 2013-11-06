@@ -5,7 +5,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.github.pozo.bkkinfo.R;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.NetworkConnectionUnavailableDialog;
 import com.github.pozo.bkkinfo.shared.WebViewIntent;
 
@@ -13,7 +12,6 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

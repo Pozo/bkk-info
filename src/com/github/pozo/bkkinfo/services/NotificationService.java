@@ -2,14 +2,11 @@ package com.github.pozo.bkkinfo.services;
 
 import java.util.Timer;
 
-import com.github.pozo.bkkinfo.shared.Constants;
-
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class NotificationService extends Service {
 	private static final String PREF_SYNC_FREQUENCY = "prefSyncFrequency";
