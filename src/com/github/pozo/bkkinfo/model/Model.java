@@ -3,7 +3,9 @@ package com.github.pozo.bkkinfo.model;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -16,15 +18,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.github.pozo.bkkinfo.activities.BasicPreferenceActivity;
 import com.github.pozo.bkkinfo.model.Entry.EntryParser;
 import com.github.pozo.bkkinfo.shared.Constants;
 
 public class Model {
 	private static final String API_URL = "http://www.bkk.hu/apps/bkkinfo/lista-api.php";
 	private static final String EMPTY_RESULT = "{\"active\":[],\"soon\":[],\"future\":[]}";
+	private static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 	
+	private static String jsonText = null;
 	private static Model model = null;
 	
 	public enum Type {
@@ -108,41 +117,60 @@ public class Model {
 		entries.get(type).add(newEntry);
 	}
 
-	public static String getJSON() {
-		DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-		HttpPost httppost = new HttpPost(API_URL);
-		// Depends on your web service
-		httppost.setHeader("Content-type", "application/json");
+	public static String getJSON(Context context, boolean refresh) {
+		if(refresh || jsonText == null) {
+			DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+			HttpPost httppost = new HttpPost(API_URL);
+			// Depends on your web service
+			httppost.setHeader("Content-type", "application/json");
 
-		InputStream inputStream = null;
-		String result = EMPTY_RESULT;
-		
-		try {
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-
-			inputStream = entity.getContent();
-			// json is UTF-8 by default
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-			StringBuilder stringBuilder = new StringBuilder();
-
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				stringBuilder.append(line + "\n");
-			}
-			result = stringBuilder.toString();
-		} catch (Exception e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
-		} finally {
+			InputStream inputStream = null;
+			jsonText = EMPTY_RESULT;
+			
 			try {
-				if (inputStream != null) {
-					inputStream.close();
-				}					
-			} catch (Exception squish) {
-				Log.e(Constants.LOG_TAG, squish.getMessage());
+				HttpResponse response = httpclient.execute(httppost);
+				HttpEntity entity = response.getEntity();
+
+				inputStream = entity.getContent();
+				// json is UTF-8 by default
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+				StringBuilder stringBuilder = new StringBuilder();
+
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					stringBuilder.append(line + "\n");
+				}
+				jsonText = stringBuilder.toString();
+
+		        setLastSyncDatePreference(context);
+			} catch (Exception e) {
+				Log.e(Constants.LOG_TAG, e.getMessage());
+			} finally {
+				try {
+					if (inputStream != null) {
+						inputStream.close();
+					}					
+				} catch (Exception squish) {
+					Log.e(Constants.LOG_TAG, squish.getMessage());
+				}
 			}
+			return jsonText;
+		} else {
+			return jsonText;
 		}
-		return result;
+		
+	}
+
+	private static void setLastSyncDatePreference(Context context) {
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		Editor prefEditor = sharedPrefs.edit();
+		prefEditor.putString(BasicPreferenceActivity.PREFERENCES_SYNC_DATE, now());
+		prefEditor.commit();
+	}
+	private static String now() {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW,Locale.getDefault());
+		return sdf.format(cal.getTime());
 	}
 	@Override
 	public String toString() {
