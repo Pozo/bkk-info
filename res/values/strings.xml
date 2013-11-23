@@ -26,6 +26,8 @@
     <string name="notification_settings_refresh_frequency_30">30 percenként</string>
     <string name="notification_settings_refresh_frequency_60">1 óránként</string>
     <string name="notification_settings_refresh_frequency_off">Soha (csak manuális)</string>
+    <string name="notification_settings_last_refresh_title">Utolsó ellenőrzés</string>
+    <string name="notification_settings_last_refresh_default_value">Még nem történt ellenőrzés</string>
     <string name="reset_all_selection">Kijelöltek törlése</string>
 
 </resources>

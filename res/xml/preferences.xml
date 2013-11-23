@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/notification_settings_title">
+    <PreferenceCategory android:title="@string/notification_settings_title" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="notificationSound"
             android:summary="@string/notification_settings_sound_title"
             android:title="@string/notification_settings_sound_description" />
+
         <ListPreference
             android:defaultValue="600"
-            android:key="prefSyncFrequency"
             android:entries="@array/syncFrequency"
-            android:summary="@string/notification_settings_refresh_frequiency_description"
             android:entryValues="@array/syncFrequencyValues"
+            android:key="prefSyncFrequency"
+            android:summary="@string/notification_settings_refresh_frequiency_description"
             android:title="@string/notification_settings_refresh_frequiency_title" />
+
+        <Preference
+            android:key="prefLastSyncDate"
+            android:title="@string/notification_settings_last_refresh_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>
