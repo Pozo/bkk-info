@@ -7,6 +7,6 @@
     <item
         android:id="@+id/alarms"
         android:icon="@drawable/clock"
-        android:title="@string/alarms"/>
+        android:title="@string/notification_settings_title"/>
 
 </menu>

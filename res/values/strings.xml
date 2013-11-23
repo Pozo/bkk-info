@@ -9,14 +9,11 @@
     <string name="changes_near_future">A közeljövő tervezett változásai</string>
     <string name="changes_future">Tervezett változások</string>
     <string name="loading">Betöltés...</string>
-    <string name="title_activity_web">WebActivity</string>
-    <string name="title_activity_notification_settings">NotificationSettingsActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="alarms">Értesítések</string>
-    <string name="notification_settings_title">Értesítések</string>
+    
     <string name="network_warning_title">Hálózati hiba: </string>
     <string name="network_warning_description">Nincs internetkapcsolat !</string>
-    
+
+    <string name="notification_settings_title">Értesítések</string>
     <string name="notification_settings_sound_title">Az értesítések hangjelzéssel történjenek</string>
     <string name="notification_settings_sound_description">Értesítés hanggal</string>
     <string name="notification_settings_refresh_frequiency_title">Automatikus frissítés gyakorisága</string>
@@ -30,4 +27,7 @@
     <string name="notification_settings_last_refresh_default_value">Még nem történt ellenőrzés</string>
     <string name="reset_all_selection">Kijelöltek törlése</string>
 
+    <string name="notification_settings_dialog_title">Értesítések szerkesztése</string>
+    <string name="notification_settings_dialog_positive_button_title">Ok</string>
+    
 </resources>
