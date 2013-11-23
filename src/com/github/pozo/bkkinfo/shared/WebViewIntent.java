@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class WebViewIntent extends Intent {
-	private final static String KEY_LINE_ID = "direction";
+	private final static String KEY_LINE_ID = "lineId";
 	
 	public static Intent buildIntent(Context context, String id) {
 		String packageName = context.getPackageName();
