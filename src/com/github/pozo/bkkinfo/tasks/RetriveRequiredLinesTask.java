@@ -11,9 +11,6 @@ import android.os.AsyncTask;
 public class RetriveRequiredLinesTask extends AsyncTask<Void, Void, ArrayList<String>> {
 	private final ProgressDialog progressDialog;
 	private final NotificationSettingsActivity notificationSettingsActivity;
-	
-	private ArrayList<String> requiredLines = new ArrayList<String>();	
-	
 
 	public RetriveRequiredLinesTask(NotificationSettingsActivity notificationSettingsActivity) {
 		this.notificationSettingsActivity = notificationSettingsActivity;
@@ -29,11 +26,10 @@ public class RetriveRequiredLinesTask extends AsyncTask<Void, Void, ArrayList<St
 	@Override
 	protected ArrayList<String> doInBackground(Void... params) {
 		DbConnector databaseConnection = DbConnector.getInstance(notificationSettingsActivity);
-		requiredLines = databaseConnection.getRequiredLines();
-		return requiredLines;
+		return databaseConnection.getRequiredLines();
 	}
 	@Override
-	protected void onPostExecute(ArrayList<String> result) {
+	protected void onPostExecute(ArrayList<String> requiredLines) {
 		notificationSettingsActivity.createTable(requiredLines);
 		if (progressDialog != null && progressDialog.isShowing()) {
 			progressDialog.dismiss();
