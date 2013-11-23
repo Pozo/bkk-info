@@ -119,12 +119,35 @@ public class DbConnector {
 		
 		return database.insert(DatabaseHelper.TABLE_NAME_REQUIRED_LINES, null, values);
 	}
+	public synchronized long addRequiredLines(String[] lineNames) {
+		final ContentValues values = new ContentValues();
+
+		for (String lineName : lineNames) {
+			values.put(LINE_NAME, lineName);			
+		}
+		
+		return database.insert(DatabaseHelper.TABLE_NAME_REQUIRED_LINES, null, values);
+	}
 	public synchronized int removeRequiredLine(String lineName) {
 		final String constraint = LINE_NAME + " = \"" + lineName+"\"";
 
 		return database.delete(
 				DatabaseHelper.TABLE_NAME_REQUIRED_LINES,
 				constraint, null);
+	}
+	public synchronized int removeRequiredLines(String[] lineNames) {
+		StringBuilder constraintBuilder = new StringBuilder();
+		
+		for (int i = 0; i < lineNames.length; i++) {
+			if(i!=lineNames.length-1) {
+				constraintBuilder.append(LINE_NAME + " = \"" + lineNames[i]+"\" AND ");	
+			} else {
+				constraintBuilder.append(LINE_NAME + " = \"" + lineNames[i]+"\"");
+			}
+		}
+		return database.delete(
+				DatabaseHelper.TABLE_NAME_REQUIRED_LINES,
+				constraintBuilder.toString(), null);
 	}
 	public synchronized long addNotification(String entryId) {
 		final ContentValues values = new ContentValues();
