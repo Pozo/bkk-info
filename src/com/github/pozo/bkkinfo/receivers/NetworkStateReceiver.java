@@ -17,7 +17,9 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 		if(NetworkConnectionHelper.isNetworkConnected(context)) {
 			Log.i(Constants.LOG_TAG, "network is now ON");
 			
-			context.startService(new Intent(context, NotificationService.class));
+			Intent serviceIntent = new Intent(context, NotificationService.class);
+			serviceIntent.putExtra(NotificationService.KEY_NEED_REFRESH, true);
+			context.startService(serviceIntent);
 		} else {
 			Log.i(Constants.LOG_TAG, "network is now OFF");
 			

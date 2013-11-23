@@ -23,7 +23,7 @@ final class NotificationTimerTask extends TimerTask {
 	public void run() {
 		Log.i(Constants.LOG_TAG, "NotificationTimerTask:run");
 		DbConnector databaseConnection = DbConnector.getInstance(context);
-		String jsonText = Model.getJSON();
+		String jsonText = Model.getJSON(context, true);
 		
 		ArrayList<String> requiredLines = databaseConnection.getRequiredLines();
 		ArrayList<String> notifications = databaseConnection.getNotifications();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import com.github.pozo.bkkinfo.activities.BasicPreferenceActivity;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Line;
@@ -29,7 +30,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 	
 	public static final String ACTION_NOTIFICATION = "com.github.pozo.bkkinfo.NOTIFICATION";
 	
-	private static final String PREFERENCES_NOTIFICATION_SOUND = "notificationSound";
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		try {
@@ -68,7 +68,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Notification notification = new Notification(LineResourceHelper.getResourceByType(lineType), title, System.currentTimeMillis());
         notification.defaults |= Notification.DEFAULT_LIGHTS;
         
-        if(sharedPrefs.getBoolean(PREFERENCES_NOTIFICATION_SOUND, false)) {
+        if(sharedPrefs.getBoolean(BasicPreferenceActivity.PREFERENCES_NOTIFICATION_SOUND, false)) {
                 notification.defaults |= Notification.DEFAULT_SOUND;                        
         }
         notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;

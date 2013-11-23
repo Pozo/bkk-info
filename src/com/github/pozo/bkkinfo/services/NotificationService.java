@@ -13,6 +13,8 @@ import android.util.Log;
 
 public class NotificationService extends Service {
 	private static final String PREF_SYNC_FREQUENCY = "prefSyncFrequency";
+	public final static String KEY_NEED_REFRESH = "direction";
+	
 	public static final String ACTION_CHECK_NOTIFICATIONS = "com.github.pozo.bkkinfo.CHECK_NOTIFICATIONS";
 	
     private Timer timer;
@@ -41,7 +43,10 @@ public class NotificationService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i(Constants.LOG_TAG, "NotificationService:onStartCommand");
-		timer.schedule(new NotificationTimerTask(this), 0);
+		
+		if(intent.getBooleanExtra(NotificationService.KEY_NEED_REFRESH, false)) {
+			timer.schedule(new NotificationTimerTask(this), 0);			
+		}
 		return START_STICKY;		
 	}
 	
