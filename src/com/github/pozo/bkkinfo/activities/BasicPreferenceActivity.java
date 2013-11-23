@@ -35,7 +35,7 @@ public class BasicPreferenceActivity extends PreferenceActivity {
 			stopService(new Intent(this, NotificationService.class));
 			
 			Intent intent = new Intent(this, NotificationService.class);
-			intent.putExtra(NotificationService.KEY_NEED_REFRESH, false);
+			intent.putExtra(NotificationService.KEY_RESTART_WITH_REFRESH, false);
 			startService(intent);
 		}
 	}
