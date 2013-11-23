@@ -1,16 +1,27 @@
 package com.github.pozo.bkkinfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Line;
+import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.shared.LineColorHelper;
+import com.github.pozo.bkkinfo.tasks.PickupRequiredLines;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -45,6 +56,15 @@ public class TableEntryRow {
 		entryTableRow.setLayoutParams(new LayoutParams(new TableLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT)));
+		
+		entryTableRow.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				new PickupRequiredLines(context, entry.getLines()).execute();
+				return true;
+			}
+		});
 		
 		TableLayout tableView = (TableLayout) entryTableRow.findViewById(R.id.line_table);
 		
@@ -118,7 +138,6 @@ public class TableEntryRow {
 		GradientDrawable bgShape = (GradientDrawable) textView.getBackground();
 		bgShape.setColor(LineColorHelper.getColorByNameAndType(context, lineName, lineType));			
 	}
-
 	private TextView createEmptyTableRow() {
 		TextView textView = new TextView(context);		
 		textView.setText(EMPTY_TABLE_TEXT);
