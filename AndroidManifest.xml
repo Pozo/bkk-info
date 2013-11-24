@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.github.pozo.bkkinfo.activities.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -31,7 +31,7 @@
             android:exported="false"
             android:label="NotificationReceiver" >
             <intent-filter>
-                <action android:name="com.github.pozo.bkkinfo.NOTIFICATION" />
+                <action android:name="com.github.pozo.bkkinfo.CHECK_NOTIFICATIONS" />
             </intent-filter>
         </receiver>
         <receiver
@@ -46,7 +46,7 @@
         </receiver>
 
         <activity
-            android:name=".activities.WebActivity"
+            android:name=".activities.web.WebActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -59,7 +59,7 @@
             android:label="BasicPreferenceActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activities.NotificationSettingsActivity"
+        <activity android:name=".activities.notificationsettings.NotificationSettingsActivity"
             android:label="NotificationSettingsActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -70,9 +70,6 @@
             android:exported="false"
             android:icon="@drawable/ic_launcher"
             android:label="@string/service_name" >
-            <intent-filter>
-                <action android:name="com.github.pozo.bkkinfo.CHECK_NOTIFICATIONS" />
-            </intent-filter>
         </service>
     </application>
 
