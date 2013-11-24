@@ -1,17 +1,15 @@
 package com.github.pozo.bkkinfo.tasks;
 
 import java.util.ArrayList;
-
-import org.json.JSONException;
 import com.github.pozo.bkkinfo.R;
-import com.github.pozo.bkkinfo.activities.MainActivity;
+import com.github.pozo.bkkinfo.activities.main.MainActivity;
+import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Model;
 import com.github.pozo.bkkinfo.model.Model.Type;
-import com.github.pozo.bkkinfo.receivers.NetworkStateReceiver;
-import com.github.pozo.bkkinfo.services.NotificationService;
-import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.shared.NetworkConnectionHelper;
-import com.github.pozo.bkkinfo.shared.NetworkConnectionUnavailableDialog;
+import com.github.pozo.bkkinfo.receivers.NotificationReceiverIntent;
+import com.github.pozo.bkkinfo.utils.Constants;
+import com.github.pozo.bkkinfo.utils.NetworkConnectionHelper;
+import com.github.pozo.bkkinfo.utils.NetworkConnectionUnavailableDialog;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,7 +20,6 @@ public class RetriveModelTask extends AsyncTask<Void, Void, Model> {
 	private final ProgressDialog progressDialog;
 	private final MainActivity mainActivity;
 	private boolean refresh = false;
-	private Model model;
 
 	public RetriveModelTask(MainActivity mainActivity) {
 		this.mainActivity = mainActivity;
@@ -37,37 +34,31 @@ public class RetriveModelTask extends AsyncTask<Void, Void, Model> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		if((!Model.isExists() || Model.isEmpty() || refresh) && NetworkConnectionHelper.isNetworkConnected(mainActivity)) {
+		if((Model.isNeedUpdate() || refresh) && NetworkConnectionHelper.isNetworkConnected(mainActivity)) {
 			this.progressDialog.setMessage(mainActivity.getResources().getString(R.string.loading));
 			this.progressDialog.show();
 		}	
 	}
 	@Override
 	protected Model doInBackground(Void... params) {
-		try {
-			model = Model.getModel(Model.getJSON(mainActivity, refresh), refresh);
-			
-			//LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mainActivity);
-			
-	        //Intent intent = new Intent();
-	        //intent.setAction(NetworkStateReceiver.ACTION_NETWORK_STATE);
-	        
-	        /*
-	        Intent intent = new Intent();
-	        intent.setAction(NotificationService.ACTION_CHECK_NOTIFICATIONS);
-	         */
-	       // mainActivity.sendBroadcast(intent);
-	        
-	        //mainActivity.sendBroadcast(intent2);
-	        //localBroadcastManager.sendBroadcast(intent);
-		} catch (JSONException e) {
-			Log.e(Constants.LOG_TAG, e.getMessage());
+		Log.i(Constants.LOG_TAG, "RetriveModelTask");
+		if(refresh) {
+			Model.updateModel(mainActivity);
 		}
-		return model;
+		DbConnector databaseConnection = DbConnector.getInstance(mainActivity);
+		
+		ArrayList<String> requiredLines = databaseConnection.getRequiredLines();
+		ArrayList<String> notifications = databaseConnection.getNotifications();
+
+		Intent intent = new NotificationReceiverIntent(requiredLines, notifications);
+		
+		mainActivity.sendBroadcast(intent);
+
+		return Model.getModel(mainActivity);
 	}
 	@Override
 	protected void onPostExecute(Model result) {
-		if(Model.isEmpty() && !NetworkConnectionHelper.isNetworkConnected(mainActivity)) {
+		if(refresh && !NetworkConnectionHelper.isNetworkConnected(mainActivity)) {
 			NetworkConnectionUnavailableDialog.create(mainActivity, false).show();
 		}
 		mainActivity.resetTables();

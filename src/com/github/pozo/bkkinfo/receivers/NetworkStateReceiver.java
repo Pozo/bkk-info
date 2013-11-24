@@ -1,8 +1,8 @@
 package com.github.pozo.bkkinfo.receivers;
 
 import com.github.pozo.bkkinfo.services.NotificationService;
-import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.shared.NetworkConnectionHelper;
+import com.github.pozo.bkkinfo.utils.Constants;
+import com.github.pozo.bkkinfo.utils.NetworkConnectionHelper;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

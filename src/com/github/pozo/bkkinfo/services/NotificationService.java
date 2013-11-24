@@ -2,7 +2,7 @@ package com.github.pozo.bkkinfo.services;
 
 import java.util.Timer;
 
-import com.github.pozo.bkkinfo.shared.Constants;
+import com.github.pozo.bkkinfo.utils.Constants;
 
 import android.app.Service;
 import android.content.Intent;
@@ -14,8 +14,6 @@ import android.util.Log;
 public class NotificationService extends Service {
 	private static final String PREF_SYNC_FREQUENCY = "prefSyncFrequency";
 	public final static String KEY_RESTART_WITH_REFRESH = "restartWithRefresh";
-	
-	public static final String ACTION_CHECK_NOTIFICATIONS = "com.github.pozo.bkkinfo.CHECK_NOTIFICATIONS";
 	
     private Timer timer;
     

@@ -1,7 +1,7 @@
 package com.github.pozo.bkkinfo.tasks;
 
 import com.github.pozo.bkkinfo.R;
-import com.github.pozo.bkkinfo.activities.NotificationSettingsActivity;
+import com.github.pozo.bkkinfo.activities.notificationsettings.NotificationSettingsActivity;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;

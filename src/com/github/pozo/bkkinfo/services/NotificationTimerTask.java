@@ -9,32 +9,28 @@ import android.util.Log;
 
 import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Model;
-import com.github.pozo.bkkinfo.receivers.NotificationReceiver;
-import com.github.pozo.bkkinfo.shared.Constants;
+import com.github.pozo.bkkinfo.receivers.NotificationReceiverIntent;
+import com.github.pozo.bkkinfo.utils.Constants;
 
-final class NotificationTimerTask extends TimerTask {
+public final class NotificationTimerTask extends TimerTask {
 	private final Context context;
 
-	public NotificationTimerTask(Context notificationService) {
-		this.context = notificationService;
+	public NotificationTimerTask(Context context) {
+		this.context = context;
 	}
 
 	@Override
 	public void run() {
 		Log.i(Constants.LOG_TAG, "NotificationTimerTask:run");
+
+		Model.updateModel(context);
 		DbConnector databaseConnection = DbConnector.getInstance(context);
-		String jsonText = Model.getJSON(context, true);
 		
 		ArrayList<String> requiredLines = databaseConnection.getRequiredLines();
 		ArrayList<String> notifications = databaseConnection.getNotifications();
 
-		Intent intent = new Intent(NotificationReceiver.ACTION_NOTIFICATION);
-
-		intent.putExtra(NotificationReceiver.REQUIRED_LINES, requiredLines);
-		intent.putExtra(NotificationReceiver.NOTIFICATIONS, notifications);
-		intent.putExtra(NotificationReceiver.JSON_TEXT, jsonText);
+		Intent intent = new NotificationReceiverIntent(requiredLines, notifications);
 		
 		context.sendBroadcast(intent);
-		//LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }
