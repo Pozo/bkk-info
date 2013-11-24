@@ -1,4 +1,4 @@
-package com.github.pozo.bkkinfo;
+package com.github.pozo.bkkinfo.activities.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.github.pozo.bkkinfo.shared.WebViewIntent;
+import com.github.pozo.bkkinfo.R;
+import com.github.pozo.bkkinfo.activities.web.WebActivityIntent;
 
 final class TableRowClickListener implements OnClickListener {
 	private Context context;
@@ -40,7 +41,7 @@ final class TableRowClickListener implements OnClickListener {
 			
 			@Override
 			public void onClick(View v) {
-				Intent webViewIntent = WebViewIntent.buildIntent(TableRowClickListener.this.context, TableRowClickListener.this.tableEntryRow.getEntry().getId());
+				Intent webViewIntent = WebActivityIntent.buildIntent(TableRowClickListener.this.context, TableRowClickListener.this.tableEntryRow.getEntry().getId());
 				TableRowClickListener.this.context.startActivity(webViewIntent);
 			}
 		});

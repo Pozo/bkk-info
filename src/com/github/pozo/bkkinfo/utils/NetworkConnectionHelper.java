@@ -1,4 +1,4 @@
-package com.github.pozo.bkkinfo.shared;
+package com.github.pozo.bkkinfo.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

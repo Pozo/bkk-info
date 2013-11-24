@@ -1,11 +1,10 @@
-package com.github.pozo.bkkinfo.shared;
+package com.github.pozo.bkkinfo.activities.web;
 
-import com.github.pozo.bkkinfo.activities.WebActivity;
 
 import android.content.Context;
 import android.content.Intent;
 
-public class WebViewIntent extends Intent {
+public class WebActivityIntent extends Intent {
 	private final static String KEY_LINE_ID = "lineId";
 	
 	public static Intent buildIntent(Context context, String id) {

@@ -2,8 +2,8 @@ package com.github.pozo.bkkinfo.activities;
 
 import com.github.pozo.bkkinfo.R;
 import com.github.pozo.bkkinfo.services.NotificationService;
-import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.shared.NetworkConnectionHelper;
+import com.github.pozo.bkkinfo.utils.Constants;
+import com.github.pozo.bkkinfo.utils.NetworkConnectionHelper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

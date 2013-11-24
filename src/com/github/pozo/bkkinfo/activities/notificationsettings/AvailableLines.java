@@ -1,4 +1,4 @@
-package com.github.pozo.bkkinfo.shared;
+package com.github.pozo.bkkinfo.activities.notificationsettings;
 
 import java.util.LinkedHashMap;
 

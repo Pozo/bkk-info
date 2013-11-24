@@ -1,15 +1,14 @@
-package com.github.pozo.bkkinfo.activities;
+package com.github.pozo.bkkinfo.activities.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.github.pozo.bkkinfo.R;
-import com.github.pozo.bkkinfo.TableEntryRow;
-import com.github.pozo.bkkinfo.ToggleButtons;
+import com.github.pozo.bkkinfo.activities.notificationsettings.NotificationSettingsActivity;
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Model.Type;
-import com.github.pozo.bkkinfo.shared.Constants;
 import com.github.pozo.bkkinfo.tasks.RetriveModelTask;
+import com.github.pozo.bkkinfo.utils.Constants;
 
 import android.os.Bundle;
 import android.app.Activity;

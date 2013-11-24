@@ -1,4 +1,4 @@
-package com.github.pozo.bkkinfo;
+package com.github.pozo.bkkinfo.activities.main;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import com.github.pozo.bkkinfo.activities.MainActivity;
+import com.github.pozo.bkkinfo.R;
 import com.github.pozo.bkkinfo.model.Line;
 import com.github.pozo.bkkinfo.model.Line.Type;
 import com.github.pozo.bkkinfo.tasks.RetriveModelTask;

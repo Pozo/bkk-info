@@ -1,4 +1,4 @@
-package com.github.pozo.bkkinfo.shared;
+package com.github.pozo.bkkinfo.receivers;
 
 import java.util.Locale;
 

@@ -1,22 +1,15 @@
-package com.github.pozo.bkkinfo;
+package com.github.pozo.bkkinfo.activities.main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+import com.github.pozo.bkkinfo.R;
+import com.github.pozo.bkkinfo.activities.LineColorHelper;
 import com.github.pozo.bkkinfo.model.Entry;
 import com.github.pozo.bkkinfo.model.Line;
-import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.shared.LineColorHelper;
 import com.github.pozo.bkkinfo.tasks.PickupRequiredLines;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;

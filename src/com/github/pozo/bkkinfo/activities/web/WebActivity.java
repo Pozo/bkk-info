@@ -1,13 +1,12 @@
-package com.github.pozo.bkkinfo.activities;
+package com.github.pozo.bkkinfo.activities.web;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.github.pozo.bkkinfo.R;
-import com.github.pozo.bkkinfo.shared.Constants;
-import com.github.pozo.bkkinfo.shared.NetworkConnectionUnavailableDialog;
-import com.github.pozo.bkkinfo.shared.WebViewIntent;
+import com.github.pozo.bkkinfo.utils.Constants;
+import com.github.pozo.bkkinfo.utils.NetworkConnectionUnavailableDialog;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -27,7 +26,7 @@ public class WebActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_web);
 
-		lineId = WebViewIntent.getLineId(getIntent());
+		lineId = WebActivityIntent.getLineId(getIntent());
 	
 		final ProgressDialog pd = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
 

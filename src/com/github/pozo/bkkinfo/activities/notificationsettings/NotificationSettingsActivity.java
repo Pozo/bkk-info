@@ -1,14 +1,14 @@
-package com.github.pozo.bkkinfo.activities;
+package com.github.pozo.bkkinfo.activities.notificationsettings;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map.Entry;
 
 import com.github.pozo.bkkinfo.R;
+import com.github.pozo.bkkinfo.activities.BasicPreferenceActivity;
+import com.github.pozo.bkkinfo.activities.LineColorHelper;
 import com.github.pozo.bkkinfo.db.DbConnector;
 import com.github.pozo.bkkinfo.model.Line.Type;
-import com.github.pozo.bkkinfo.shared.AvailableLines;
-import com.github.pozo.bkkinfo.shared.LineColorHelper;
 import com.github.pozo.bkkinfo.tasks.TruncateDatabaseTask;
 import com.github.pozo.bkkinfo.tasks.RetriveRequiredLinesTask;
 
